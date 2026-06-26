@@ -1,0 +1,79 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "man/figures/README-",
+    out.width = "100%",
+    tidy.opts = list(width.cutoff = 80),
+    tidy = TRUE
+)
+```
+
+<!-- badges: start -->
+[![GitHub issues](https://img.shields.io/github/issues/Minotau-R/orrery)](https://github.com/Minotau-R/orrery/issues)
+[![GitHub pulls](https://img.shields.io/github/issues-pr/Minotau-R/orrery)](https://github.com/Minotau-R/orrery/pulls)
+[![R BiocCheck](https://github.com/Minotau-R/orrery/actions/workflows/test.yml/badge.svg)](https://github.com/Minotau-R/orrery/actions/workflows/test.yml)
+<!-- badges: end -->
+
+
+
+## Installation instructions
+
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
+install the released version of `orrery`:
+
+```{r 'cran-install', eval = FALSE}
+# Not yet on CRAN!
+# install.packages("orrery")
+```
+
+Or install the development version from this repository:
+
+```{r, 'remotes-install', eval = FALSE}
+install.packages("remotes")
+remotes::install_github("minotau-R/orrery")
+```
+
+
+## Getting started using orrery
+
+### Generate random data
+
+```{r, 'load-prep', eval = TRUE}
+library(orrery)
+library(dirmult)
+
+```
+
+```{r, 'random-prep', eval = TRUE}
+# Create a table with 20 features and 2 samples  
+x <- rdirichlet(2, runif(20))
+
+# CLR transform
+x.clr <- dclr(x)
+
+# compute distance
+dist.x <- dist(x.clr, method = "euclidean")
+
+# Copy x into y
+y <- rbind(
+    x, 
+    perturb_by_relab(x[1L,], by = 10) 
+)
+
+y.clr <- dclr(y)
+
+dist.y <- dist(y.clr, method = "euclidean")
+
+dist.x
+dist.y
+
+```
+
+[See the vignettes on the package site.](https://minotau-r.github.io/orrery/articles/orrery.html) 

@@ -1,0 +1,22 @@
+Package: orrery
+Title: Tools to Analyse Compositional Change
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Thomaz", "Bastiaanssen", email = "thomazbastiaanssen@gmail.com", 
+        role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-6891-734X")),
+    person("Fabian", "Bastiaanssen", email = "f.t.s.bastiaanssen@ucc.ie", 
+        role = c("aut"), comment = c(ORCID = "0009-0002-1906-5376"))
+        )
+Description: A framework and toolkit to facilitate analysis of high-dimensional 
+    distances and longitudinal trajectories.
+Imports:
+    stats,
+    dirmult
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+LazyData: false
+Config/testthat/edition: 3
+Suggests: 
+    testthat (>= 3.0.0)
