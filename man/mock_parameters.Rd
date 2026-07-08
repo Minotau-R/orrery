@@ -8,8 +8,10 @@ mock_parameters(
   n_features = 10,
   persistence = 0.95,
   interaction_sd = 0.01,
-  volatility = 0.05,
-  correlation = 0.5
+  individual_sd = 0.05,
+  shared_sd = 0.02,
+  n_factors = 3,
+  factor_sd = 0.05
 )
 }
 \arguments{
@@ -19,9 +21,13 @@ mock_parameters(
 
 \item{interaction_sd}{numeric. Standard deviation of the interaction terms in the dynamics matrix.}
 
-\item{volatility}{numeric. Volatility parameter for the process covariance matrix.}
+\item{individual_sd}{numeric. Standard deviation of independent species-specific variability.}
 
-\item{correlation}{numeric. Correlation parameter for the process covariance matrix.}
+\item{shared_sd}{numeric. Standard deviation of shared environmental variability.}
+
+\item{n_factors}{numeric. Number of latent ecological factors influencing covariance.}
+
+\item{factor_sd}{numeric. Standard deviation of latent factor effects.}
 }
 \value{
 A list containing the mock parameters.
