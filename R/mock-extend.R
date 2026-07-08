@@ -41,7 +41,6 @@ stopifnot("read_depth must be a scalar or a vector of length n_time"= length(rea
 stopifnot("Q must be a symmetric matrix" = isSymmetric(Q))
 stopifnot("n_time must be a positive integer" = (n_time > 0 & n_time == round(n_time)))
 stopifnot("n_replicates must be a positive integer" = (n_replicates > 0 & n_replicates == round(n_replicates)))
-print(eigen(Q)$values)
 stopifnot("All eigenvalues of Q must be positive" = all(eigen(Q)$values > 0))
 species_names <- names(p0)
 if (is.null(species_names)) {
