@@ -172,8 +172,11 @@ return(list(
 #' @param n_features numeric. Number of features in the dataset.
 #' @param persistence numeric. Persistence parameter for the dynamics matrix.
 #' @param interaction_sd numeric. Standard deviation of the interaction terms in the dynamics matrix.
-#' @param volatility numeric. Volatility parameter for the process covariance matrix.
-#' @param correlation numeric. Correlation parameter for the process covariance matrix.
+#' @param individual_sd numeric. Standard deviation of independent species-specific variability.
+#' @param shared_sd numeric. Standard deviation of shared environmental variability.
+#' @param n_factors numeric. Number of latent ecological factors influencing covariance.
+#' @param factor_sd numeric. Standard deviation of latent factor effects.
+
 #'
 #' @return A list containing the mock parameters.
 #'
@@ -181,8 +184,10 @@ mock_parameters <- function(
     n_features = 10,
     persistence = 0.95,
     interaction_sd = 0.01,
-    volatility = 0.05,
-    correlation = 0.5
+    individual_sd = 0.05,
+    shared_sd = 0.02,
+    n_factors = 3,
+    factor_sd = 0.05
 ){
 
     init <- setNames(runif(n_features), paste0("sp", seq_len(n_features)))
@@ -193,16 +198,16 @@ mock_parameters <- function(
     A <- diag(persistence, D)
     A <- A + matrix(rnorm(D^2, sd = interaction_sd), D, D)
     diag(A) <- persistence
+    Q_individual <- diag(individual_sd^2, D)
 
-    sd_vec <- runif(D, 0.5, 1.5) * sqrt(volatility)
-    base_corr <- matrix(rnorm(D^2, mean = correlation, sd = 0.1), D, D)
-    base_corr <- (base_corr + t(base_corr)) / 2
-    diag(base_corr) <- 1
+    u <- rep(1, D)
+    Q_shared <- shared_sd^2 * outer(u, u)
+    L <- matrix(rnorm(D * n_factors, sd = factor_sd), D, n_factors)
+    Q_factor <- L %*% t(L)
 
-    Q <- (sd_vec %o% sd_vec) * base_corr
+    Q <- Q_individual + Q_shared + Q_factor
 
     Q <- (Q + t(Q)) / 2
-    diag(Q) <- sd_vec^2
 
     list(init = init, A = A, Q = Q)
 }
